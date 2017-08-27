@@ -1,0 +1,18 @@
+# This sample file shows the default "routing" scheme of the project.
+# If you can, you should move all these directives in the Apache configuration of your website.
+# Indeed .htaccess files are slower as they are checked for each HTTP query.
+
+# By default, a query on index.php will use the "default" template in the "configurations" folder.
+# The stock "default" configuration is empty.
+
+# The following is tested with Apache 2.4 (Debian 8+)
+# To do your own thing, see https://httpd.apache.org/docs/2.4/en/rewrite/remapping.html#rewrite-query
+RewriteEngine On
+
+# If the path "conf2" is used, it will be used as configuration.
+# Example: http://website/conf2/ will use configurations/conf2.conf .
+# Uncomment the following if you move the contents of resources in public_html and want to have direct access to the resources
+#RewriteCond "%{REQUEST_URI}"          "!^/(cache|fonts|images)/"
+# Avoid rewriting "hard" queries (with or without index.php, with '?')
+RewriteCond "%{REQUEST_URI}"          "!^(index.php)?[?]"
+RewriteRule "^/?([a-zA-Z0-9]+)(/|$)"  "/?p=$1"   [QSA,PT]
