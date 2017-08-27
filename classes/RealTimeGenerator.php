@@ -2,7 +2,7 @@
 
 namespace Ruzgfpegk\GeneratorsImg;
 
-use Imagine\Image\AbstractImage;   // Here so that PhpStorm unterstands what's going on.
+use Imagine\Image\AbstractImage;   // Here so that PhpStorm understands what's going on.
 use Imagine\Image\AbstractImagine; // Same
 use Imagine\Image\AbstractFont;    // Same
 use Imagine\Image\Box;
