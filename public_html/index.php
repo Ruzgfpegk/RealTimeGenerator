@@ -1,14 +1,16 @@
 <?php
-// Internal classes are also autoloaded through composer
+declare( strict_types = 1 );
+
+// Internal classes also use autoload through composer
 require __DIR__ . '/../vendor/autoload.php';
 
 use Ruzgfpegk\GeneratorsImg\RealTimeGenerator;
 
-// Have RTG read the settings related to the GET p parameter
-$RTG = new RealTimeGenerator;
-
-if (empty($RTG)) {
-	echo '<p>' . "configuration file couldn't be loaded!" . '</p>';
-} else {
-	$RTG->displayImage();
+// By default, RTG receives the config name through the "p" parameter (HTTP GET)
+try {
+	$RTG = new RealTimeGenerator;
+} catch (Exception $error) {
+	echo '<p>' . $error . '</p>';
 }
+
+$RTG->displayImage();

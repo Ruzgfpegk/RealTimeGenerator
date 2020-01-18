@@ -5,6 +5,7 @@
   "homepage": "https://github.com/Ruzgfpegk/RealTimeGenerator",
   "minimum-stability": "stable",
   "license": "GNU GPLv3",
+  "version": "0.2.0",
   "authors": [
     {
       "name": "Ruzgfpegk",
@@ -14,16 +15,20 @@
     }
   ],
   "require": {
-    "php": ">=5.6",
-    "imagine/imagine": "0.7.x-dev",
-    "moroz1999/gif-creator": "1.1.0"
+    "php": ">=7.2",
+    "imagine/imagine": "1.2.3",
+    "moroz1999/gif-creator": "1.1.1",
+    "ext-gd": "*",
+    "ext-mbstring": "*"
   },
   "require-dev": {
-    "phpmd/phpmd": "2.6.0"
+    "roave/security-advisories": "dev-master",
+    "phpmd/phpmd": "2.8.1",
+    "squizlabs/php_codesniffer": "3.5.3"
   },
   "autoload": {
     "psr-4": {
-      "Ruzgfpegk\\GeneratorsImg\\": "classes/"
+      "Ruzgfpegk\\GeneratorsImg\\": "src/"
     }
   }
 }

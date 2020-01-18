@@ -7,18 +7,23 @@ The goals are multiple:
 * Only one instance of the code exists for many projects.
 
 ## Requirements ##
+OS:
+ * Doesn't seem to matter, but rendering differences are present (better on Linux). Tested under Win10 and Debian9.
+
+PHP:
+ * Targeting 7.2+. Tested with success on 7.2 and 7.3.
 
 Depending on which image library you use, you'll need at least one of these libraries:
  * Gd (doesn't support animated GIF files, so a slow external library is used)
  * Imagemagick (Imagick)
  * GraphicsMagick (Gmagick)
 
-You'll need composer to install external libraries used in this project: see https://getcomposer.org/ .
+You'll need composer to install external libraries used in this project (imagine and gif-creator): see <https://getcomposer.org/> .
 
 ## Usage ##
 
 ### Quick start ###
-In your webserver configuration, create a new virtual host to the `public_html` folder of the project.
+In your web server configuration, create a new virtual host to the `public_html` folder of the project.
 
 If you're using Apache and planning on using the rewritten URLs (see below), either copy-paste the contents of the `public_html/.htaccess` in the virtual host configuration file or allow configuration overrides.
 
@@ -35,6 +40,12 @@ If you wish to customize the output of a text field by using the input from GET,
  * http://subdomain.name.com/?p=custom1&param=customtext
 
 
+### Examples ###
+ * Multi-Image (one image on top of another) (JPG) : [config file](configurations/multiimage.conf) - [result](https://rtg.zero-sum.fr/multiimage) .
+ * Parametric text value (PNG) : [config file](configurations/textparam.conf) - [result](https://rtg.zero-sum.fr/textparam?name=test) .
+ * Date and date timer with timezones (GIF) : [config file](configurations/timer.conf) - [result](https://rtg.zero-sum.fr/timer) .
+ * Two parallel date timers : [config file](configurations/multitimer.conf) - [result](https://rtg.zero-sum.fr/multitimer) .
+
 ### Folder Hierarchy ###
 
 Here is the expected folder hierarchy under the project root:
@@ -44,7 +55,7 @@ Here is the expected folder hierarchy under the project root:
  * configurations/
    * a few test configuration files showing how to use this project, feel free to move or delete them 
    * (put your own configuration files here)
- * public_html/ (folder served by the webserver)
+ * public_html/ (ServerRoot for the web server)
    * index.php
    * .htaccess
  * resources/
@@ -58,7 +69,7 @@ Here is the expected folder hierarchy under the project root:
      * (one folder by configuration file name)
        * (images used by the configuration with the parent folder name)
  * vendor/
-   * (list of dependencies to install using composer)
+   * (list of dependencies, to install using composer)
 
 ### Caching ###
 
@@ -77,7 +88,7 @@ Or to mount it automatically at boot-time, in /etc/fstab:
 
 ## What works ##
 * Configuration composition (ie. having a `common.conf` file that defines common elements for multiple configurations)
-* Static and dynamic text fields (Gd, Imagick) 
+* Static and dynamic text fields (Gd, Imagick)
 * Static image import (Gd, Imagick)
 * Dynamic date output (Gd, Imagick)
 * Dynamic timer, multiple timers included (Gd through GifCreator)
@@ -87,10 +98,9 @@ Or to mount it automatically at boot-time, in /etc/fstab:
 * Gmagick hasn't yet been tested.
 * Caching is not yet implemented.
 * Dynamic countdown is not yet implemented.
-* Image maps (using part of an image as text) are not yet implemented.
 
 ## TODO ##
-* When using cache, use a hash of arguments in the cache filenames to make sure we don't serve the wrong files, and start/end timestamps to quickly locate.
+* When using cache with parametric renders, add a hash of the arguments in the cached files names to make sure we don't serve the wrong ones.
 * Add a "inframe" parameter for all displayed element types, that would define in which frame they are present (0: all).
 * Support chaining of elements, for cases where one element starting position depends on the size of another.
 * Add exceptions and handle them better.
