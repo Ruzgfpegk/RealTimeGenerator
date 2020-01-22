@@ -10,7 +10,7 @@ use RuntimeException;
  *
  * @package Ruzgfpegk\GeneratorsImg\Elements
  */
-class Font extends GenericElement implements ElementInterface
+class Font extends GenericElement
 {
 	// Element properties
 	/**

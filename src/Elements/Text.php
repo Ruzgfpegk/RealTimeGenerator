@@ -12,7 +12,7 @@ use Imagine\Image\Palette\RGB;
  *
  * @package Ruzgfpegk\GeneratorsImg\Elements
  */
-class Text extends GenericElement implements ElementInterface
+class Text extends GenericElement
 {
 	/**
 	 * @var string|string[] The text that will be displayed
@@ -126,7 +126,7 @@ class Text extends GenericElement implements ElementInterface
 	 * Replaces %example% strings in the "string" property by the value of the
 	 * "example" POST key.
 	 */
-	public function argumentReplace()
+	public function argumentReplace() : void
 	{
 		// Replace text parameters by filtered values from GET
 		$varPattern        = '/%([a-z0-9]+)%/i';
@@ -149,7 +149,7 @@ class Text extends GenericElement implements ElementInterface
 	 *
 	 * @param $frameNumber integer Frame on which to add the text
 	 */
-	public function addToFrame($frameNumber = 0)
+	public function addToFrame($frameNumber = 0) : void
 	{
 		$this->addText($frameNumber);
 	}
@@ -161,7 +161,7 @@ class Text extends GenericElement implements ElementInterface
 	 * @param integer $frameNumber frame on which to add the text
 	 * @param string  $overrideStr to use the specified string instead of the element one
 	 */
-	protected function addText($frameNumber = 0, $overrideStr = null)
+	protected function addText($frameNumber = 0, $overrideStr = null) : void
 	{
 		$sourcePosObj = $this->positionObj;
 		

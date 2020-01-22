@@ -13,7 +13,7 @@ use Imagine\Image\Point;
  *
  * @package Ruzgfpegk\GeneratorsImg\Elements
  */
-class Image extends GenericElement implements ElementInterface
+class Image extends GenericElement
 {
 	// Element properties
 	/**
@@ -106,7 +106,7 @@ class Image extends GenericElement implements ElementInterface
 	 *
 	 * @param integer $frameNumber Frame on which to add the image
 	 */
-	public function addToFrame($frameNumber = 0)
+	public function addToFrame($frameNumber = 0) : void
 	{
 		$sourceImgObj = $this->globalConfig['imagine']->open($this->imagePath);
 		$sourcePosObj = $this->positionObj;

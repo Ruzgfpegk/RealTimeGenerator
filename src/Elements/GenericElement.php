@@ -10,7 +10,7 @@ use Imagine\Image\Point;
  *
  * @package Ruzgfpegk\GeneratorsImg\Elements
  */
-abstract class GenericElement
+abstract class GenericElement implements ElementInterface
 {
 	/**
 	 * @var array Global objects for the whole image

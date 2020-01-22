@@ -14,6 +14,8 @@ use Ruzgfpegk\GeneratorsImg\Elements\AnimationTrait;
  */
 class DateTimer extends Date
 {
+	use AnimationTrait;
+	
 	// Element properties
 	
 	/**

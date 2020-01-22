@@ -30,7 +30,7 @@ If you're using Apache and planning on using the rewritten URLs (see below), eit
 
 In the `configurations` folder, create a new configuration (custom1.conf in the following lines) and edit it according to your needs using other files as reference.
 
-You'll probably need at least one font in `resources/fonts/custom1 OR common/`: for basic open fonts, see the [Liberation Fonts](https://pagure.io/liberation-fonts/) (common.conf uses `LiberationMono-Regular.ttf`).
+You'll probably need at least one font in `resources/fonts/custom1 OR common/`: for basic open fonts, see the [Liberation Fonts](https://github.com/liberationfonts) (common.conf uses `LiberationMono-Regular.ttf`).
 
 Go to your VHost url one of these ways:
  * http://subdomain.name.com/custom1/ (if using the rewrite directives of `.htaccess`)
