@@ -52,10 +52,12 @@ Here is the expected folder hierarchy under the project root:
 
  * src/RealTimeGenerator.php
    * The main class, called by public_html/index.php .
+ * src/Core/
+   * The core PHP classes.
  * src/Elements/
-   * The PHP Class files, one per element type, plus internal ones I'll move elsewhere in the future.
+   * The elements PHP classes: the abstract root, plus one per element type.
  * configurations/
-   * a few test configuration files showing how to use this project, feel free to move or delete them 
+   * A few test configuration files showing how to use this project, feel free to move or delete them.
    * (put your own configuration files here)
  * public_html/ (ServerRoot for the web server)
    * index.php
