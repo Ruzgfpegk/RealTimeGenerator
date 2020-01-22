@@ -14,7 +14,7 @@ use Imagine\Image\AbstractImage;   // Here so that PhpStorm understands what's g
 use Imagine\Image\AbstractImagine; // Same
 use GifCreator\GifCreator;
 
-use Ruzgfpegk\GeneratorsImg\Elements\ElementFactory;
+use Ruzgfpegk\GeneratorsImg\Core\ElementFactory;
 
 /**
  * Class RealTimeGenerator

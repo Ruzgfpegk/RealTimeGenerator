@@ -166,7 +166,7 @@ class Text extends GenericElement
 		$sourcePosObj = $this->positionObj;
 		
 		// Initialize Font property, AbstractFont
-		// font path is already checked for in the Font element
+		// font path has already been checked for in the Font element
 		$fontElement   = $this->globalConfig['elements'][$this->font];
 		$this->fontObj = $this->globalConfig['imagine']->font(
 			$fontElement->fontPath,

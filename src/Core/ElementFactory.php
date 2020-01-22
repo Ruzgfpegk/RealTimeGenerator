@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Ruzgfpegk\GeneratorsImg\Elements;
+namespace Ruzgfpegk\GeneratorsImg\Core;
 
 use Exception;
 use InvalidArgumentException;
@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * Class ElementFactory
  *
- * @package Ruzgfpegk\GeneratorsImg\Elements
+ * @package Ruzgfpegk\GeneratorsImg\Core
  */
 class ElementFactory
 {
@@ -34,28 +34,28 @@ class ElementFactory
 	) : ElementInterface {
 		if (empty($elementType)) {
 			throw new InvalidArgumentException(
-				"The first parameter should be a string containing the element type.\n"
+				'The first parameter should be a string containing the element type.<br>'
 			);
 		}
 		if (empty($configName)) {
 			throw new InvalidArgumentException(
-				"The second parameter should be a string containing the config name.\n"
+				'The second parameter should be a string containing the config name.<br>'
 			);
 		}
 		if (empty($elementName)) {
 			throw new InvalidArgumentException(
-				"The third parameter should be a string containing the element name.\n"
+				'The third parameter should be a string containing the element name.<br>'
 			);
 		}
 		if (!is_array($elementParameters)) {
 			throw new InvalidArgumentException(
 				'The fourth parameter should be an associative array containing '
-				. "the element parameters.\n"
+				. 'the element parameters.<br>'
 			);
 		}
 		
-		if (!file_exists(__DIR__ . '/' . $elementType . '.php')) {
-			throw new RuntimeException("No class found for element $elementType!\n");
+		if (!file_exists( dirname(__DIR__, 1) . '/Elements/' . $elementType . '.php')) {
+			throw new RuntimeException("No class found for element $elementType!<br>");
 		}
 		
 		$elementFullType = 'Ruzgfpegk\\GeneratorsImg\\Elements\\'. $elementType;

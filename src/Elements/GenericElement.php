@@ -5,6 +5,8 @@ namespace Ruzgfpegk\GeneratorsImg\Elements;
 
 use Imagine\Image\Point;
 
+use Ruzgfpegk\GeneratorsImg\Core\ElementInterface;
+
 /**
  * Class GenericElement
  *

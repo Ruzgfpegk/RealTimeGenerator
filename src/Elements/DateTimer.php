@@ -5,7 +5,7 @@ namespace Ruzgfpegk\GeneratorsImg\Elements;
 
 use Exception;
 
-use Ruzgfpegk\GeneratorsImg\Elements\AnimationTrait;
+use Ruzgfpegk\GeneratorsImg\Core\AnimationTrait;
 
 /**
  * Class DateTimer

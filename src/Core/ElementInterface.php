@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Ruzgfpegk\GeneratorsImg\Elements;
+namespace Ruzgfpegk\GeneratorsImg\Core;
 
 /**
  * Interface ElementInterface
  *
- * @package Ruzgfpegk\GeneratorsImg\Elements
+ * @package Ruzgfpegk\GeneratorsImg\Core
  */
 interface ElementInterface
 {

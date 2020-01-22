@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace Ruzgfpegk\GeneratorsImg\Elements;
+namespace Ruzgfpegk\GeneratorsImg\Core;
 
 /**
  * Trait AnimationTrait

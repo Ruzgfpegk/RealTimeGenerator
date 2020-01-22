@@ -7,6 +7,8 @@ use Imagine\Image\Box;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\ColorInterface;
 
+use Ruzgfpegk\GeneratorsImg\Core\ElementInterface;
+
 /**
  * Class Config
  *
