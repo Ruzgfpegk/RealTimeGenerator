@@ -14,16 +14,16 @@ class Font extends GenericElement
 {
 	// Element properties
 	/**
-	 * @var string The font file name
+	 * The font file name
 	 */
-	public $file;
+	public string $file;
 	
 	
 	// Processed variables
 	/**
-	 * @var string The relative font path
+	 * The relative font path
 	 */
-	public $fontPath;
+	public string $fontPath;
 	
 	/**
 	 * Font constructor
@@ -35,7 +35,7 @@ class Font extends GenericElement
 	 *
 	 * @throws RuntimeException
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(string $configName, string $elementName, array $elementParameters, array $globalConfig)
 	{
 		parent::__construct($configName, $elementName, $elementParameters, $globalConfig);
 		$this->setDefaults();
@@ -56,7 +56,7 @@ class Font extends GenericElement
 	 *
 	 * @throws RuntimeException
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
 		if (array_key_exists('file', $section)) {
 			$this->file = $section['file'];
@@ -90,14 +90,13 @@ class Font extends GenericElement
 		if (isset($this->fontPath)) {
 			$fullPath = $this->fontPath;
 		} else {
-			$tmpPath = '../resources/fonts/' . $this->configName . '/'
-				. $this->file;
-			if (file_exists($tmpPath)) {
-				$fullPath = $tmpPath;
+			$tmpPath  = dirname(__DIR__, 2) . '/resources/fonts/' . $this->configName . '/' . $this->file;
+			$realPath = realpath($tmpPath);
+			
+			if ($realPath !== false && file_exists($realPath)) {
+				$fullPath = $realPath;
 			} else {
-				throw new RuntimeException(
-					"Font path $tmpPath is invalid!\n"
-				);
+				throw new RuntimeException("Font path $tmpPath is invalid!\n");
 			}
 		}
 		

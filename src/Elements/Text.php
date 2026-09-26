@@ -15,39 +15,39 @@ use Imagine\Image\Palette\RGB;
 class Text extends GenericElement
 {
 	/**
-	 * @var string|string[] The text that will be displayed
+	 * The text that will be displayed, as an array of strings if animation
 	 */
-	public $string;
+	public string|array $string;
 	
 	/**
-	 * @var string The font element name
+	 * The font element name
 	 */
-	public $font;
+	public string $font;
 	
 	/**
-	 * @var integer The font size of the text
+	 * The font size of the text
 	 */
-	public $size;
+	public int $size;
 	
 	/**
-	 * @var string Color: "R,G,B" Properties as string
+	 * Color: "R,G,B" Properties as string
 	 */
-	public $color;
+	public string $color;
 	
 	/**
-	 * @var integer The opacity of the text
+	 * The opacity of the text
 	 */
-	public $opacity;
+	public int $opacity;
 	
 	// Objects
 	/**
-	 * @var ColorInterface RGBA Element (properties color and opacity)
+	 * RGBA Element (properties colour and opacity)
 	 */
-	public $RGBA;
+	public ColorInterface $RGBA;
 	/**
-	 * @var AbstractFont Font object
+	 * Font object
 	 */
-	public $fontObj;
+	public AbstractFont $fontObj;
 	
 	
 	/**
@@ -58,7 +58,7 @@ class Text extends GenericElement
 	 * @param string[] $elementParameters  Associative array of section parameters
 	 * @param array    $globalConfig       Global elements passed to objects
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(string $configName, string $elementName, $elementParameters, array $globalConfig)
 	{
 		parent::__construct($configName, $elementName, $elementParameters, $globalConfig);
 		$this->setDefaults();
@@ -82,7 +82,7 @@ class Text extends GenericElement
 	/**
 	 * @param string[] $section Associative array of section parameters
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
 		parent::loadSection($section);
 		
@@ -95,7 +95,7 @@ class Text extends GenericElement
 		}
 		
 		if (array_key_exists('size', $section)) {
-			$this->size = $section['size'];
+			$this->size = (int) $section['size'];
 		}
 		
 		if (array_key_exists('color', $section)) {
@@ -130,9 +130,7 @@ class Text extends GenericElement
 	{
 		// Replace text parameters by filtered values from GET
 		$varPattern        = '/%([a-z0-9]+)%/i';
-		$returnFilteredGet = static function ($input) {
-			return filter_input(INPUT_GET, $input[1]);
-		};
+		$returnFilteredGet = static fn($input) => filter_input(INPUT_GET, $input[1]);
 		
 		while (preg_match($varPattern, $this->string)) {
 			$this->string = preg_replace_callback(
@@ -149,7 +147,7 @@ class Text extends GenericElement
 	 *
 	 * @param $frameNumber integer Frame on which to add the text
 	 */
-	public function addToFrame($frameNumber = 0) : void
+	public function addToFrame(int $frameNumber = 0) : void
 	{
 		$this->addText($frameNumber);
 	}
@@ -158,16 +156,17 @@ class Text extends GenericElement
 	/**
 	 * Add a text element on top of the image
 	 *
-	 * @param integer $frameNumber frame on which to add the text
-	 * @param string  $overrideStr to use the specified string instead of the element one
+	 * @param integer     $frameNumber frame on which to add the text
+	 * @param string|null $overrideStr to use the specified string instead of the element one
 	 */
-	protected function addText($frameNumber = 0, $overrideStr = null) : void
+	protected function addText(int $frameNumber = 0, ?string $overrideStr = null): void
 	{
 		$sourcePosObj = $this->positionObj;
 		
-		// Initialize Font property, AbstractFont
+		// Initialise Font property AbstractFont
 		// font path has already been checked for in the Font element
 		$fontElement   = $this->globalConfig['elements'][$this->font];
+		
 		$this->fontObj = $this->globalConfig['imagine']->font(
 			$fontElement->fontPath,
 			$this->size,

@@ -14,67 +14,47 @@ use Ruzgfpegk\GeneratorsImg\Core\ElementInterface;
  */
 abstract class GenericElement implements ElementInterface
 {
-	/**
-	 * @var array Global objects for the whole image
-	 */
-	public $globalConfig;
-	
-	// Meta-properties
-	/**
-	 * @var string The name of the configuration containing the element
-	 *             (also in the configuration file filename).
-	 */
-	public $configName;
-	
-	/**
-	 * @var string The identifier of the element
-	 *             (section of the configuration file)
-	 */
-	public $elementName;
-	
-	
 	// Common element properties
 	/**
-	 * @var string Position of the element, as a string 'x,y'
+	 * Position of the element, as a string 'x,y'
 	 */
-	public $position;
+	public string $position;
 	
 	/**
-	 * @var integer Opacity of the element, between 0 (transparent) and 100 (opaque).
+	 * Opacity of the element, between 0 (transparent) and 100 (opaque).
 	 */
-	public $opacity;
+	public int $opacity;
 	
 	/**
-	 * @var string A list of frames on which the element is to be drawn,
-	 *             empty list meaning "all the frames".
+	 * A comma-separated list of frames on which the element is to be drawn, an empty list meaning "all the frames".
+	 * @todo Implement
 	 */
-	public $onFrames;
+	public string $onFrames;
 	
 	
 	// Objects and processes values
 	/**
-	 * @var Point Object version of the position property
+	 * Object version of the position property
 	 */
-	public $positionObj;
+	public Point $positionObj;
+	
 	/**
 	 * @var int[] Array version of the onFrames property
+	 * @todo Implement, See postLoad()
 	 */
-	public $onFramesArr;
+	public array $onFramesArr;
 	
 	
 	/**
 	 * GenericElement constructor.
 	 *
-	 * @param string   $configName         Name of the configuration file of the section
-	 * @param string   $elementName        Name of the element
+	 * @param string   $configName         The name of the configuration containing the element (also in the configuration file filename).
+	 * @param string   $elementName        The identifier of the element (section of the configuration file)
 	 * @param string[] $elementParameters  Associative array of section parameters
-	 * @param array    $globalConfig       Global elements passed to objects
+	 * @param array    $globalConfig       Global objects for the whole image
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(public string $configName, public string $elementName, array $elementParameters, public array $globalConfig)
 	{
-		$this->configName   = $configName;
-		$this->elementName  = $elementName;
-		$this->globalConfig = $globalConfig;
 		$this->setDefaults();
 		$this->loadSection($elementParameters);
 		$this->postLoad();
@@ -95,14 +75,14 @@ abstract class GenericElement implements ElementInterface
 	 *
 	 * @param string[] $section Associative array of section parameters
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
 		if (array_key_exists('position', $section)) {
 			$this->position = $section['position'];
 		}
 		
 		if (array_key_exists('opacity', $section)) {
-			$this->opacity = $section['opacity'];
+			$this->opacity = (int) $section['opacity'];
 		}
 		
 		if (array_key_exists('onFrames', $section)) {

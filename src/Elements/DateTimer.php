@@ -19,7 +19,7 @@ class DateTimer extends Date
 	// Element properties
 	
 	/**
-	 * Timer constructor
+	 * DateTimer constructor
 	 *
 	 * @param string   $configName         Name of the configuration file of the section
 	 * @param string   $elementName        Name of the element
@@ -28,7 +28,7 @@ class DateTimer extends Date
 	 *
 	 * @throws Exception
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(string $configName, string $elementName, array $elementParameters, array $globalConfig)
 	{
 		parent::__construct($configName, $elementName, $elementParameters, $globalConfig);
 		$this->setDefaults();

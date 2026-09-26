@@ -17,49 +17,49 @@ use Ruzgfpegk\GeneratorsImg\Core\ElementInterface;
 class Config implements ElementInterface
 {
 	/**
-	 * @var string The renderer to use, among "Gd", "Imagick" and "Gmagick"
+	 * The renderer to use, among "Gd", "Imagick" and "Gmagick"
 	 */
-	public $renderer;
+	public string $renderer;
 	
 	/**
-	 * @var string Output format, among "png", "jpg" and "gif"
+	 * Output format, among "png", "jpg" and "gif"
 	 */
-	public $format;
+	public string $format;
 	
 	/**
-	 * @var integer JPEG Quality percentage
+	 * JPEG Quality percentage
 	 */
-	public $quality;
+	public int $quality;
 	
 	/**
-	 * @var string Comma-separated list of elements to render, back-to-front
+	 * Comma-separated list of elements to render, back-to-front
 	 */
-	public $layout;
+	public string $layout;
 	
 	/**
-	 * @var string Dimensions of the image, in the format "weight,height"
+	 * Dimensions of the image, in the format "weight,height"
 	 */
-	public $dimensions;
+	public string $dimensions;
 	
 	/**
-	 * @var string Background color, in the format "R,G,B" (0-255 range each)
+	 * Background color, in the format "R,G,B" (0-255 range each)
 	 */
-	public $bgcolor;
+	public string $bgcolor;
 	
 	/**
-	 * @var string Other config file to import
+	 * Another config file to import
 	 */
-	public $import;
+	public string $import;
 	
 	/**
-	 * @var integer For animations, the number of seconds between frames
+	 * For animations, the number of seconds between frames
 	 */
-	public $interval;
+	public int $interval;
 	
 	/**
-	 * @var integer The total number of frames, if the output is an animation
+	 * The total number of frames if the output is an animation
 	 */
-	public $frames;
+	public int $frames;
 	
 	
 	// Processed variables
@@ -81,27 +81,25 @@ class Config implements ElementInterface
 	
 	// Objects
 	/**
-	 * @var Box Dimensions of the output image in object form
+	 * Dimensions of the output image in object form
 	 */
-	public $dimensionsObj;
+	public Box $dimensionsObj;
 	
 	/**
-	 * @var ColorInterface Background color of the output image in object form
+	 * Background color of the output image in object form
 	 */
-	public $bgcolorObj;
+	public ColorInterface $bgcolorObj;
 	
 	// Meta-properties
 	/**
-	 * @var string The name of the configuration containing the element
-	 *             (also in the configuration file filename).
+	 * The name of the configuration containing the element (also in the configuration file filename).
 	 */
-	public $configName;
+	public string $configName;
 	
 	/**
-	 * @var string The identifier of the element
-	 *             (section of the configuration file)
+	 * The identifier of the element (section of the configuration file)
 	 */
-	public $elementName;
+	public string $elementName;
 	
 	/**
 	 * Config constructor
@@ -110,7 +108,7 @@ class Config implements ElementInterface
 	 * @param string   $elementName        Name of the element
 	 * @param string[] $elementParameters  Associative array of section parameters
 	 */
-	public function __construct($configName, $elementName, $elementParameters)
+	public function __construct(string $configName, string $elementName, array $elementParameters)
 	{
 		$this->configName  = $configName;
 		$this->elementName = $elementName;
@@ -139,23 +137,32 @@ class Config implements ElementInterface
 	/**
 	 * @param string[] $section Associative array of section parameters
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
-		$properties = [
+		$propertiesStr = [
 			'renderer',
 			'format',
-			'quality',
 			'layout',
 			'dimensions',
 			'bgcolor',
-			'import',
+			'import'
+		];
+		
+		$propertiesInt = [
+			'quality',
 			'interval',
 			'frames'
 		];
+
+		foreach ($propertiesStr as $propertyStr) {
+			if (array_key_exists($propertyStr, $section)) {
+				$this->{$propertyStr} = $section[$propertyStr];
+			}
+		}
 		
-		foreach ($properties as $property) {
-			if (array_key_exists($property, $section)) {
-				$this->{$property} = $section[$property];
+		foreach ($propertiesInt as $propertyInt) {
+			if (array_key_exists($propertyInt, $section)) {
+				$this->{$propertyInt} = (int) $section[$propertyInt];
 			}
 		}
 	}
@@ -168,11 +175,11 @@ class Config implements ElementInterface
 	{
 		$this->layoutArr     = explode(',', $this->layout);
 		$this->dimensionsArr = array_map(
-			'intval',
+			intval(...),
 			explode(',', $this->dimensions)
 		);
 		$this->bgcolorArr    = array_map(
-			'intval',
+			intval(...),
 			explode(',', $this->bgcolor)
 		);
 		

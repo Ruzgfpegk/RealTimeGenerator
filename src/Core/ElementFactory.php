@@ -29,8 +29,8 @@ class ElementFactory
 		string $elementType,
 		string $configName,
 		string $elementName,
-		$elementParameters,
-		$globalConfig = []
+		array $elementParameters,
+		array $globalConfig = []
 	) : ElementInterface {
 		if (empty($elementType)) {
 			throw new InvalidArgumentException(
@@ -47,7 +47,7 @@ class ElementFactory
 				'The third parameter should be a string containing the element name.<br>'
 			);
 		}
-		if (!is_array($elementParameters)) {
+		if (!count($elementParameters)) {
 			throw new InvalidArgumentException(
 				'The fourth parameter should be an associative array containing '
 				. 'the element parameters.<br>'

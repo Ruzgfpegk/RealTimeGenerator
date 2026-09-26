@@ -17,15 +17,15 @@ class Image extends GenericElement
 {
 	// Element properties
 	/**
-	 * @var string The image name
+	 * The image name
 	 */
-	public $file;
+	public string $file;
 	
 	// Processed variables
 	/**
-	 * @var string The path to the image to render
+	 * The path to the image to render
 	 */
-	public $imagePath;
+	public string $imagePath;
 	
 	
 	/**
@@ -38,7 +38,7 @@ class Image extends GenericElement
 	 *
 	 * @throws RuntimeException
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(string $configName, string $elementName, $elementParameters, array $globalConfig)
 	{
 		parent::__construct($configName, $elementName, $elementParameters, $globalConfig);
 		$this->loadSection($elementParameters);
@@ -51,7 +51,7 @@ class Image extends GenericElement
 	 *
 	 * @throws RuntimeException
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
 		parent::loadSection($section);
 		
@@ -106,7 +106,7 @@ class Image extends GenericElement
 	 *
 	 * @param integer $frameNumber Frame on which to add the image
 	 */
-	public function addToFrame($frameNumber = 0) : void
+	public function addToFrame(int $frameNumber = 0) : void
 	{
 		$sourceImgObj = $this->globalConfig['imagine']->open($this->imagePath);
 		$sourcePosObj = $this->positionObj;

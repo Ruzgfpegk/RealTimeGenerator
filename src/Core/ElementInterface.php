@@ -18,7 +18,7 @@ interface ElementInterface
 	/**
 	 * @param string[] $section Associative array of section parameters
 	 */
-	public function loadSection($section);
+	public function loadSection(array $section);
 	
 	/**
 	 * Internal treatments/checks to run after the conf is loaded

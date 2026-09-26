@@ -13,15 +13,16 @@ namespace Ruzgfpegk\GeneratorsImg\Core;
 trait AnimationTrait
 {
 	/**
-	 * @var integer The number of seconds between two updates of the element.
-	 *              It should be a multiple of the main "interval" property.
+	 * The number of seconds between two updates of the element.
+	 * It should be a multiple of the main "interval" property.
 	 *
 	 * @todo Allow elements to have their own interval.
 	 */
-	public $interval;
+	public int $interval;
 	
 	/**
-	 * @var integer The number of frames for the element animation
+	 * The number of frames for the element animation
+	 * @todo Implement
 	 */
-	public $numberOfFrames;
+	public int $numberOfFrames;
 }

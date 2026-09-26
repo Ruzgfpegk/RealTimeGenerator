@@ -5,26 +5,33 @@
   "homepage": "https://github.com/Ruzgfpegk/RealTimeGenerator",
   "minimum-stability": "stable",
   "license": "GNU GPLv3",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "authors": [
     {
       "name": "Ruzgfpegk",
       "email": "Ruzgfpegk@zero-sum.fr",
-      "homepage": "http://www.twitter.com/Ruzgfpegk",
+      "homepage": "https://x.com/Ruzgfpegk",
       "role": "Developer"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Ruzgfpegk/GifCreator"
+    }
+  ],
   "require": {
-    "php": ">=7.2",
-    "imagine/imagine": "1.2.3",
-    "moroz1999/gif-creator": "1.1.1",
+    "php": ">=8.2",
+    "imagine/imagine": "1.5.4",
+    "moroz1999/gif-creator": "dev-GdImage-patch-1#51bcd9370c4836b95cd1d667333adf63d76394d0",
     "ext-gd": "*",
     "ext-mbstring": "*"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "phpmd/phpmd": "2.8.1",
-    "squizlabs/php_codesniffer": "3.5.3"
+    "phpmd/phpmd": "2.15.0",
+    "squizlabs/php_codesniffer": "4.0.4",
+    "rector/rector": "2.6.7"
   },
   "autoload": {
     "psr-4": {

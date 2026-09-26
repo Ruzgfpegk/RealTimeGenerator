@@ -32,65 +32,65 @@ class RealTimeGenerator
 	 *          Source: http://www.fileformat.info/format/gif/egff.htm
 	 * @todo implement
 	 */
-	private $defaultInterval = 1;
+	private int $defaultInterval = 1;
 	
 	/**
-	 * @var int The number of seconds a cache file is valid (0 = no cache, null = use file limit)
+	 * The number of seconds a cache file is valid (0 = no cache, null = use file limit)
+	 * @todo Implement
 	 */
-	//private $cacheTimeout = 0;
+	private int $cacheTimeout = 0;
 	
 	/**
-	 * @var int The number of most recent cache files to keep
+	 * The number of most recent cache files to keep
+	 * @todo Implement
 	 */
-	//private $cacheNumber = 50;
+	private int $cacheNumber = 50;
 
 	/**
-	 * @var array Elements to render
+	 * Elements to render
 	 */
-	private $elements;
+	private array $elements = [];
 	
 	// Work variables
 	/**
-	 * @var AbstractImagine The Imagine object to manage transformations
+	 * The Imagine object to manage transformations
 	 */
-	private $imagine;
+	private ?AbstractImagine $imagine = null;
 	/**
-	 * @var AbstractImage The Canvas on which the final image is drawn
+	 * The Canvas on which the final image is drawn
 	 */
-	private $canvas;
+	private ?AbstractImage $canvas = null;
 	/**
 	 * @var array[AbstractImage] The independent frames as we can't use layers with Gd
 	 */
-	private $frames;
+	private array $frames = [];
 	/**
-	 * @var string binary string for the final image if the rendering is done by GifCreator
+	 * Binary string for the final image if the rendering is done by GifCreator
 	 */
-	private $gcImage;
+	private ?string $gcImage = null;
 	/**
-	 * @var array List of options for Imagine output
+	 * List of options for Imagine output
 	 */
-	private $renderOptions;
+	private array $renderOptions = [];
 	/**
-	 * @var boolean Has an exception been raised? If yes, no rendering will be done, to allow error output.
+	 * Has an exception been raised? If yes, no rendering will be done to allow error output.
 	 */
-	public $exceptionFound = false;
+	public bool $exceptionFound = false;
 	
 	/**
 	 * RealTimeGenerator constructor.
 	 *
-	 * @param $configName     string The configuration to use (null to use query parameter)
+	 * @param $configName     string The configuration to use (empty to use query parameter)
 	 * @param $queryParameter string The parameter of the URL query string (GET)
 	 *
 	 * @throws Exception Error message if the config file doesn't exist
 	 */
-	public function __construct($configName = null, $queryParameter = 'p')
+	public function __construct(string $configName = '', string $queryParameter = 'p')
 	{
 		// Closure to strip all non-alphanumerical characters
-		$alphanumFilter = static function ($input) {
-			return mb_ereg_replace('[^A-Za-z0-9]', '', $input);
-		};
+		$alphanumericFilter = static fn($input) => mb_ereg_replace('[^A-Za-z0-9]', '', $input);
 		
-		if ($configName === null) {
+		if ($configName === '') {
 			// Get the conf from the URL parameter, or use 'default'
 			$configName = filter_input(INPUT_GET, $queryParameter);
 			
@@ -102,7 +102,7 @@ class RealTimeGenerator
 		$configName       = filter_var(
 			$configName,
 			FILTER_CALLBACK,
-			array('options' => $alphanumFilter)
+			[ 'options' => $alphanumericFilter ]
 		);
 		$this->elements   = $this->loadConfig($configName);
 		
@@ -127,7 +127,7 @@ class RealTimeGenerator
 	{
 		$configFilePath = __DIR__ . '/../configurations/' . $configName . '.conf';
 		
-		$elements = array();
+		$elements = [];
 		
 		if (file_exists($configFilePath)) {
 			$parsedConf = parse_ini_file($configFilePath, true);
@@ -168,7 +168,7 @@ class RealTimeGenerator
 				
 				// $globalConfig holds the key/values we want to give to objects for context
 				// 'imagine' and 'frames' are defined afterwards:
-				// they shouldn't be used during elements initialization anyway
+				// they shouldn't be used during element initialisation anyway
 				$globalConfig['config']   =  $configElement;
 				$globalConfig['elements'] =& $this->elements;
 				$globalConfig['imagine']  =& $this->imagine;
@@ -279,9 +279,7 @@ class RealTimeGenerator
 				$referenceFrameBin = $this->frames[0]->get('png');
 				
 				for ($frameNumber = 0; $frameNumber < $this->elements['config']->frames; $frameNumber++) {
-					if (!isset($this->frames[$frameNumber])) {
-						$this->frames[$frameNumber] = $this->imagine->load($referenceFrameBin);
-					}
+					$this->frames[$frameNumber] ??= $this->imagine->load($referenceFrameBin);
 					
 					$this->elements[$elementName]->addToFrame($frameNumber);
 				}
@@ -293,8 +291,8 @@ class RealTimeGenerator
 			&& $this->elements['config']->renderer === 'Gd'
 			&& count($this->frames) > 1) {
 			$gcObject       = new GifCreator();
-			$gcFrames       = array();
-			$framesDuration = array();
+			$gcFrames       = [];
+			$framesDuration = [];
 			
 			foreach ($this->frames as $layer) {
 				$gcFrames[]       = imagecreatefromstring($layer->get('gif'));
@@ -307,7 +305,7 @@ class RealTimeGenerator
 			// Else, continue using Imagine
 			
 			// Set options according to the image
-			$this->renderOptions = array('flatten' => true);
+			$this->renderOptions = [ 'flatten' => true ];
 			
 			if ($this->elements['config']->format === 'gif') {
 				if (count($this->frames) > 1) {

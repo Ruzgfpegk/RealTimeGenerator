@@ -16,21 +16,19 @@ use RuntimeException;
 class Date extends Text
 {
 	/**
-	 * @var boolean Internal variable: has the string field been converted to text?
+	 * Internal variable: has the string field been converted to text?
 	 */
-	public $isConverted;
+	public bool $isConverted;
 	
 	/**
-	 * @var string The date that will be displayed,
-	 *             a DateTime-compatible string if $isConverted is false
+	 * The date that will be displayed, a DateTime-compatible string if $isConverted is false, as an array of strings if animation
 	 */
-	public $string;
+	public string|array $string;
 	
 	/**
-	 * @var string The timezone of the date,
-	 *             a DateTimeZone-compatible string
+	 * The timezone of the date, a DateTimeZone-compatible string
 	 */
-	public $timezone;
+	public string $timezone;
 	
 	/**
 	 * Date constructor
@@ -43,7 +41,7 @@ class Date extends Text
 	 * @throws RuntimeException
 	 * @throws Exception
 	 */
-	public function __construct($configName, $elementName, $elementParameters, $globalConfig)
+	public function __construct(string $configName, string $elementName, array $elementParameters, array $globalConfig)
 	{
 		parent::__construct($configName, $elementName, $elementParameters, $globalConfig);
 		$this->setDefaults();
@@ -68,7 +66,7 @@ class Date extends Text
 	/**
 	 * @param string[] $section Associative array of section parameters
 	 */
-	public function loadSection($section) : void
+	public function loadSection(array $section) : void
 	{
 		parent::loadSection($section);
 		
@@ -89,16 +87,16 @@ class Date extends Text
 	 *
 	 * @throws Exception
 	 */
-	public function strToDate($frames = 1, $interval = 1) : void
+	public function strToDate(int $frames = 1, int $interval = 1) : void
 	{
-		$framesStr = null;
-		$params    = null;
+		$framesStr = [];
+		$params    = [];
 		
 		if ($this->timezone !== null) {
 			$tzObject = new DateTimeZone($this->timezone);
-			$params   = array('now', $tzObject);
+			$params   = [ 'now', $tzObject ];
 		} else {
-			$params = array('now');
+			$params = [ 'now' ];
 		}
 		
 		$date = new DateTime(...$params);
